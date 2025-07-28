@@ -13,25 +13,16 @@
 import { onMounted, ref } from 'vue'
 import api from '@/api/axios'
 import Chart from 'primevue/chart'
-import { type Data } from '@/composebles/types/incomes';
+import { type incomes } from '@/composebles/types/incomes';
+import { useData } from '@/composebles/Data/useData';
 
 
-const incomes = ref<Data[] | null>(null);
+const incomes = ref<incomes[] | null>(null);
 
 async function fetchUrl() {
 
-    const date = new Date();
-
-    const formarDate: string = date
-  .toLocaleDateString("ru", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  })
-  .split(".")
-  .reverse()
-  .join("-");
-
+  const formatDate = useData();
+  console.log(formatDate);
     
 
   try {
@@ -41,7 +32,7 @@ async function fetchUrl() {
         page: 1,
         limit: 50,
         dateFrom: '2025-01-01',
-        dateTo: formarDate,
+        dateTo: formatDate,
       },
     });
     incomes.value = res.data.data;
@@ -78,7 +69,7 @@ const setChartData = () => {
 
   });
 
-  console.log(grouped);
+  // console.log(grouped);
   const labels = Object.keys(grouped);
   const values = Object.values(grouped);
 

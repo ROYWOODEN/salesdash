@@ -1,4 +1,4 @@
-interface Data {
+interface incomes {
     "income_id": number,
     "date": number,
     "last_change_date": number,
@@ -9,4 +9,4 @@ interface Data {
     "nm_id": number
 }
 
-export type { Data };
+export type { incomes };
