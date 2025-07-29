@@ -1,6 +1,9 @@
 <template>
    <main>
-    <div style="display: flex; justify-content: end; margin-right: 10%;">
+    <div style="display: flex; justify-content: space-around; margin-right: 10%;">
+
+        <button v-if="isSort" @click="sortByDate()">sort Date</button>
+        <button v-else @click="sortByDate()">sort Date</button>
         <button v-if="isSort" @click="sortByQuantity()">sort Quantity</button>
         <button v-else @click="sortByQuantity()">sort Quantity</button>
 
@@ -55,6 +58,15 @@ const sortByQuantity = () => {
     }   else {
         incomes.value.sort((a, b) => b.quantity - a.quantity)
     }
+};
+
+const sortByDate = () => {
+  isSort.value = !isSort.value
+  if(isSort.value) {
+    incomes.value.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+  } else {
+    incomes.value.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  }
 }
 
 watch([row, page], async () => {
